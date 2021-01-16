@@ -1,0 +1,31 @@
+{
+   "type": "record",
+   "name": "SmallSchema",
+   "namespace": "org.example",
+   "fields": [
+      {
+         "name": "name",
+         "type": "string"
+      },
+      {
+         "name": "age",
+         "type": "int"
+      },
+      {
+         "name": "phoneNumber",
+         "type": [
+            "null",
+            "string"
+         ],
+         "default" : null
+      },
+      {
+         "name": "company",
+         "type": [
+            "null",
+            "string"
+         ],
+         "default": null
+      }
+   ]
+}
