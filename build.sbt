@@ -2,7 +2,8 @@ ThisBuild / scalaVersion     := "2.12.10"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.example"
 ThisBuild / organizationName := "example"
-avroStringType := "Utf8"
+avroStringType := "String"
+enablePlugins(JmhPlugin)
 
 lazy val root = (project in file("."))
   .settings(
@@ -17,3 +18,9 @@ lazy val root = (project in file("."))
     )
   )
 
+
+
+addCommandAlias(
+  "runProfiler",
+  "jmh:run -i 3 -wi 2 -f 1 -t 1  -prof async:output=flamegraph"
+)
