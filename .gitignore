@@ -2,6 +2,12 @@
 *.class
 *.log
 
+
+
+#Benchmarks
+example.benchmarks.*/
+profiler.txt
+
 # SBT
 dist/*
 target/
