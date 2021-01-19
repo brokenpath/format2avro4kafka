@@ -12,6 +12,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.apache.avro" % "avro" % "1.9.2",
       "com.linkedin.avroutil1" % "helper-all" % "0.2.22",
+      "com.linkedin.avroutil1" % "avro-fastserde" % "0.2.22",
       "com.fasterxml.jackson.dataformat" % "jackson-dataformat-csv" % "2.11.4",
       "org.slf4j" % "slf4j-simple" % "1.7.30",
       "org.xerial.snappy" % "snappy-java" % "1.1.7.7"

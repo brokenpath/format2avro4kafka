@@ -12,6 +12,7 @@ import scala.util.Random
 import example.Hello
 import org.example.SmallSchema
 import org.example.WideSchema
+import java.io.ByteArrayOutputStream
 
 @State(Scope.Thread)
 class TestBenchmark() {
@@ -62,7 +63,7 @@ class TestBenchmark() {
         "")
         .reduce( (acc, v) => acc + v )
   
-  @Benchmark
+/*   @Benchmark
   def smallSchemaFromUTF8(bh: Blackhole) : Unit = {
     var smallSchemaStream =  new ByteArrayInputStream(smallSchemaString.getBytes(StandardCharsets.UTF_8))
     
@@ -114,6 +115,16 @@ class TestBenchmark() {
       bh.consume(w)
     }
     emptyWideSchemaStream.close()
+  }
+
+ */
+  @Benchmark
+  def writeToStream() : Unit = {
+    var w = new WideSchema()
+    val emptyWideSchemaStream = new ByteArrayInputStream(emptyWideSchemaString.getBytes(StandardCharsets.UTF_8))
+    val out = new ByteArrayOutputStream()
+    val reader = Hello.setReader(w, emptyWideSchemaStream)
+    example.Hello.write[WideSchema](out, w.getSchema(), reader)
   }
 
   

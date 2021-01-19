@@ -11,6 +11,13 @@ import org.xerial.snappy.Snappy;
 import com.fasterxml.jackson.dataformat.csv.CsvParser
 import java.io.InputStream
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.linkedin.avro.fastserde.FastSpecificDatumWriter
+import java.io.OutputStream
+import org.apache.avro.Schema
+import org.apache.avro.specific.SpecificRecordBase
+import com.fasterxml.jackson.databind.MappingIterator
+import com.linkedin.avroutil1.compatibility.AvroCompatibilityHelper
+import java.io.ByteArrayOutputStream
 
 
 object Hello extends Greeting with App {
@@ -21,6 +28,14 @@ object Hello extends Greeting with App {
     mapper.readerFor(obj.getClass()).`with`(schema).readValues[T](in)
   }
 
+  def write[T <: SpecificRecordBase](out: OutputStream, schema : Schema, iterator: MappingIterator[T]) = {
+    val writer = new FastSpecificDatumWriter[T](schema)
+    //needs resource management
+    val encoder = AvroCompatibilityHelper.newBinaryEncoder(out, true, null)
+    while(iterator.hasNext()){
+      writer.write(iterator.next(), encoder)
+    }
+  }
 
   def stringReader(in: InputStream) = {
     val s =  Array[String]()
